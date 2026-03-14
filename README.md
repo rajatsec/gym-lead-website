@@ -32,8 +32,8 @@ In the competitive fitness industry, speed and conversion are everything. This p
 ---
 
 ## 📸 Screenshots
-*(Coming Soon - Visualizing the transformation)*
-![Hero Section Placeholder](https://via.placeholder.com/1200x600?text=Gym+Landing+Page+Hero)
+
+![Hero Section Placeholder](https://github.com/rajatsec/real-estate-landing/blob/master/src/assets/real%20estate.png)
 
 ---
 
