@@ -33,7 +33,7 @@ In the competitive fitness industry, speed and conversion are everything. This p
 
 ## 📸 Screenshots
 
-![Hero Section Placeholder](https://github.com/rajatsec/real-estate-landing/blob/master/src/assets/real%20estate.png)
+![Hero Section Placeholder](https://github.com/rajatsec/gym-lead-website/blob/master/src/assets/gym.png)
 
 ---
 
