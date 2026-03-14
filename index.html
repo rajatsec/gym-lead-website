@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <title>Titan Fitness | Elite Training & Performance | Delhi's Premium Gym</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
+    <meta name="description" content="Experience elite fitness at Titan Fitness. Premium equipment, expert trainers, and a community dedicated to results. Join now for a free trial.">
+    <meta property="og:title" content="Titan Fitness | Unleash The Beast Within">
+    <meta property="og:description" content="Transform your body with Delhi's most premium fitness facility. Join the elite.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect to CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Local Tailwind CSS -->
+    <link rel="stylesheet" href="../../dist/output.css">
+    
+    <style>
+        /* Custom Glowing Effect for Buttons */
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+        }
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered delays for a smoother feel */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        /* Red Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
+
+        /* Custom Carousel Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* FAQ Transition */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+        }
+        .faq-item.active svg {
+            transform: rotate(180deg);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #dc2626;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* WhatsApp Logic */
+        #floating-wa { transition: all 0.5s ease; }
+        #floating-wa.wa-out { opacity: 0; pointer-events: none; transform: scale(0.5) translateY(50px); }
+    </style>
+</head>
+<body class="bg-black text-white font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
+
+<!-- Promotional Banner (Now Scrolls with Page) -->
+<div class="bg-red-600 text-white py-2.5 text-center text-[10px] md:text-xs font-black uppercase tracking-[0.2em] relative z-[60] shadow-lg">
+    ⚡ Limited Time Offer – First Week Free! <a href="#plans" class="underline ml-2 hover:text-black transition-colors">Claim Yours Now</a> ⚡
+</div>
+
+<!-- Navbar (Sticky to top after banner scrolls) -->
+<nav class="bg-black/90 backdrop-blur-md border-b border-red-900/50 sticky top-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-black tracking-tighter text-red-600 uppercase italic drop-shadow-[0_0_10px_rgba(220,38,38,0.5)] dynamic-name">Titan Fitness</h1>
+        
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex space-x-8 text-sm font-medium tracking-widest uppercase text-gray-400">
+            <li><a href="#" class="hover:text-red-500 transition-colors">Home</a></li>
+            <li><a href="#transformations" class="hover:text-red-500 transition-colors">Results</a></li>
+            <li><a href="#plans" class="hover:text-red-500 transition-colors">Plans</a></li>
+            <li><a href="#faq" class="hover:text-red-500 transition-colors">FAQ</a></li>
+            <li><a href="#contact" class="hover:text-red-500 transition-colors">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-4">
+            <a href="#plans" class="hidden sm:block bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-white transition-all btn-glow">
+                Join Now
+            </a>
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center space-y-8 text-2xl font-black uppercase tracking-widest italic">
+        <button id="close-menu" class="absolute top-6 right-6 text-white">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <a href="#" class="hover:text-red-600 transition-colors menu-link">Home</a>
+        <a href="#transformations" class="hover:text-red-600 transition-colors menu-link">Results</a>
+        <a href="#plans" class="hover:text-red-600 transition-colors menu-link">Plans</a>
+        <a href="#contact" class="hover:text-red-600 transition-colors menu-link">Contact</a>
+        <a href="#plans" class="bg-red-600 px-10 py-4 rounded-full text-lg menu-link">Join Now</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="min-h-[90vh] flex items-center justify-center bg-cover bg-center relative"
+    style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');">
+    
+    <div class="absolute inset-0 bg-gradient-to-b from-red-950/40 via-black/60 to-black"></div>
+
+    <div class="relative text-center px-6 max-w-4xl reveal">
+        <span class="text-red-600 font-bold tracking-[0.4em] uppercase text-xs md:text-sm mb-6 block border border-red-600/30 w-max mx-auto px-4 py-1 rounded-full bg-red-600/10">No Excuses. Only Results.</span>
+        <h2 class="text-5xl md:text-8xl font-black text-white leading-none uppercase italic drop-shadow-2xl">
+            Unleash The <span class="text-red-600">Beast</span> Within
+        </h2>
+        <p class="mt-8 text-gray-300 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+            Premium training. Elite equipment. Real transformation. Join the elite community of <span class="dynamic-name font-bold text-white">Titan Fitness</span> and rewrite your story.
+        </p>
+        <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#plans"
+               class="bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-full text-lg font-bold uppercase tracking-widest transition-all btn-glow active:scale-95 flex items-center justify-center gap-2">
+                Start Training <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </a>
+            <a href="#contact"
+               class="border-2 border-white/20 hover:border-red-600 px-10 py-5 rounded-full text-lg font-bold uppercase tracking-widest transition-all hover:bg-red-600/10 active:scale-95">
+                Book Free Trial
+            </a>
+        </div>
+        
+        <!-- Trust Badge -->
+        <div class="mt-12 flex items-center justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+            <span class="text-[10px] uppercase font-bold tracking-widest border-r border-white/20 pr-8">Trusted by 500+ Athletes</span>
+            <div class="flex gap-4">
+                <span class="font-black italic">FITNESS+</span>
+                <span class="font-black italic text-red-600">BEAST</span>
+                <span class="font-black italic">IRON</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Strip -->
+<section class="bg-red-600 py-3 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+        <h4 class="text-white text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-center md:text-left">
+            Ready to start your <span class="text-black">transformation</span> today?
+        </h4>
+        <div class="flex gap-4">
+            <a href="#plans" class="bg-black text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+                Get Started
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="py-24 bg-black overflow-hidden border-b border-gray-900">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="reveal">
+            <h3 class="text-4xl font-black text-white mb-4 uppercase italic">Why Choose <span class="text-red-600 dynamic-name">Titan</span>?</h3>
+            <p class="text-gray-500 mb-16 max-w-lg mx-auto">We provide the absolute best environment and high-performance equipment to push your limits beyond imagination.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="group bg-gray-950 p-10 rounded-3xl border border-gray-900 hover:border-red-600/50 transition-all hover:-translate-y-2 reveal">
+                <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600 transition-colors">
+                    <svg class="w-8 h-8 text-red-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Elite Coaching</h4>
+                <p class="text-gray-500 leading-relaxed text-sm">Our certified master trainers specialize in biomechanics and nutrition to ensure you reach your goals safely and fast.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="group bg-gray-950 p-10 rounded-3xl border border-gray-900 hover:border-red-600/50 transition-all hover:-translate-y-2 reveal delay-200">
+                <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600 transition-colors">
+                    <svg class="w-8 h-8 text-red-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">24/7 Access</h4>
+                <p class="text-gray-500 leading-relaxed text-sm">Your ambition doesn't sleep. Access our facility anytime, day or night, with secure biometric entry for your convenience.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group bg-gray-950 p-10 rounded-3xl border border-gray-900 hover:border-red-600/50 transition-all hover:-translate-y-2 reveal delay-400">
+                <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600 transition-colors">
+                    <svg class="w-8 h-8 text-red-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                </div>
+                <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Modern Equipment</h4>
+                <p class="text-gray-500 leading-relaxed text-sm">Train with world-class machines from Hammer Strength, Life Fitness, and Rogue. We never compromise on gear quality.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Before / After Transformation Section -->
+<section id="transformations" class="py-24 bg-gray-950">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="reveal">
+            <h3 class="text-4xl font-black text-white mb-4 uppercase italic">The <span class="text-red-600">Transformation</span> Lab</h3>
+            <p class="text-gray-500 mb-16 max-w-lg mx-auto">Real people, real sweat, real results. We don't just sell memberships; we build athletes.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Item 1: Weight Loss -->
+            <div class="relative group overflow-hidden rounded-3xl reveal bg-black border border-gray-900">
+                <div class="flex h-64">
+                    <div class="w-1/2 relative overflow-hidden">
+                        <img src="../../assets/wagit lossing/before.png" class="h-full w-full object-cover grayscale opacity-50" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-black/80 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">Before</span>
+                    </div>
+                    <div class="w-1/2 relative overflow-hidden border-l border-red-600/30">
+                        <img src="../../assets/wagit lossing/after.png" class="h-full w-full object-cover" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-red-600 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">After</span>
+                    </div>
+                </div>
+                <div class="p-6 text-left border-t border-red-600/20">
+                    <p class="text-white font-bold text-lg">Arjun Sharma <span class="text-red-600 ml-2 italic">-15kg</span></p>
+                    <p class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-1 font-medium">12 Weeks Transformation</p>
+                </div>
+            </div>
+
+            <!-- Item 2: Muscle Gain -->
+            <div class="relative group overflow-hidden rounded-3xl reveal bg-black border border-gray-900">
+                <div class="flex h-64">
+                    <div class="w-1/2 relative overflow-hidden">
+                        <img src="../../assets/muscle gain/before.png" class="h-full w-full object-cover grayscale opacity-50" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-black/80 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">Before</span>
+                    </div>
+                    <div class="w-1/2 relative overflow-hidden border-l border-red-600/30">
+                        <img src="../../assets/muscle gain/after.png" class="h-full w-full object-cover" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-red-600 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">After</span>
+                    </div>
+                </div>
+                <div class="p-6 text-left border-t border-red-600/20">
+                    <p class="text-white font-bold text-lg">Priya Malik <span class="text-red-600 ml-2 italic">Muscle Gain</span></p>
+                    <p class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-1 font-medium">8 Weeks Progress</p>
+                </div>
+            </div>
+
+            <!-- Item 3: Powerlifter -->
+            <div class="relative group overflow-hidden rounded-3xl reveal bg-black border border-gray-900">
+                <div class="flex h-64">
+                    <div class="w-1/2 relative overflow-hidden">
+                        <img src="../../assets/powerlifter/before.png" class="h-full w-full object-cover grayscale opacity-50" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-black/80 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">Before</span>
+                    </div>
+                    <div class="w-1/2 relative overflow-hidden border-l border-red-600/30">
+                        <img src="../../assets/powerlifter/after.png" class="h-full w-full object-cover" loading="lazy">
+                        <span class="absolute top-2 left-2 bg-red-600 text-[10px] px-3 py-1 uppercase font-bold tracking-widest">After</span>
+                    </div>
+                </div>
+                <div class="p-6 text-left border-t border-red-600/20">
+                    <p class="text-white font-bold text-lg">Vikram Singh <span class="text-red-600 ml-2 italic">Powerlifter</span></p>
+                    <p class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-1 font-medium">6 Months Journey</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Stories (Carousel) -->
+<section class="py-24 bg-black overflow-hidden border-y border-gray-900">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center reveal">
+            <h3 class="text-4xl font-black text-white mb-4 uppercase italic">Elite <span class="text-red-600">Testimonials</span></h3>
+            <p class="text-gray-500 mb-16 max-w-lg mx-auto">Don't just take our word for it. Hear from those who achieved greatness.</p>
+        </div>
+        
+        <!-- Carousel Container -->
+        <div class="relative group">
+            <div id="testimonial-slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth pb-8">
+                
+                <!-- Slide 1 -->
+                <div class="min-w-full md:min-w-[400px] snap-center bg-gray-950 p-10 rounded-[2rem] border border-gray-900 relative">
+                    <div class="flex gap-1 text-red-600 mb-6">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-300 italic mb-8 leading-relaxed">"The best decision of my life. The vibe at <span class="dynamic-name">Titan Fitness</span> is purely addictive. I've never felt stronger or more confident!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center font-bold text-lg shadow-lg shadow-red-600/20">RK</div>
+                        <div>
+                            <h5 class="text-white font-bold">Rohan Kumar</h5>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">Member for 1 Year</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="min-w-full md:min-w-[400px] snap-center bg-gray-950 p-10 rounded-[2rem] border border-gray-900 relative">
+                    <div class="flex gap-1 text-red-600 mb-6">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-300 italic mb-8 leading-relaxed">"The equipment is world-class. If you're serious about your gains, this is the place to be. Period."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center font-bold text-lg shadow-lg shadow-red-600/20">AS</div>
+                        <div>
+                            <h5 class="text-white font-bold">Ananya Singh</h5>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">Professional Athlete</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="min-w-full md:min-w-[400px] snap-center bg-gray-950 p-10 rounded-[2rem] border border-gray-900 relative">
+                    <div class="flex gap-1 text-red-600 mb-6">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-gray-300 italic mb-8 leading-relaxed">"24/7 access is a lifesaver for my busy schedule. Clean environment and very professional staff."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center font-bold text-lg shadow-lg shadow-red-600/20">VK</div>
+                        <div>
+                            <h5 class="text-white font-bold">Vikram Khanna</h5>
+                            <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">IT Professional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <div class="flex justify-center gap-4 mt-8">
+                <button onclick="slideTestimonial('prev')" class="p-3 rounded-full border border-gray-900 hover:border-red-600 transition-colors group">
+                    <svg class="w-6 h-6 text-gray-500 group-hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="slideTestimonial('next')" class="p-3 rounded-full border border-gray-900 hover:border-red-600 transition-colors group">
+                    <svg class="w-6 h-6 text-gray-500 group-hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Instagram Section (Fixed Broken Images) -->
+<section class="py-24 bg-gray-950 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 reveal gap-6">
+            <div class="text-center md:text-left">
+                <h3 class="text-4xl font-black text-white mb-2 uppercase italic">Inner <span class="text-red-600">Circle</span></h3>
+                <p class="text-gray-500 uppercase tracking-[0.3em] text-[10px] font-bold">Follow the journey @TitanFitnessDelhi</p>
+            </div>
+            <a href="#" class="bg-red-600/10 text-red-600 border border-red-600 px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-red-600 hover:text-white transition-all">
+                Join Community
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            <!-- Grid Items -->
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 1">
+            </div>
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 2">
+            </div>
+            <!-- Fixed Image 3 -->
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 3">
+            </div>
+            <!-- Fixed Image 4 -->
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 4">
+            </div>
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1550345332-09e3ac987658?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 5">
+            </div>
+            <div class="aspect-square bg-gray-900 overflow-hidden reveal">
+                <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=60&w=400&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" alt="Gym 6">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section id="plans" class="py-24 bg-black border-y border-gray-900">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="reveal">
+            <h3 class="text-4xl font-black text-white mb-16 uppercase italic">Choose Your <span class="text-red-600">Level</span></h3>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 items-center">
+
+            <!-- Basic -->
+            <div class="bg-gray-950 border border-gray-900 p-8 rounded-3xl transition-all hover:border-red-600/30 reveal">
+                <h4 class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-6">Starter Pack</h4>
+                <p class="text-5xl font-black text-white mb-6 italic tracking-tighter">₹999<span class="text-sm font-normal text-gray-500">/mo</span></p>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm">
+                    <li class="flex items-center justify-center gap-3"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> Full Gym Access</li>
+                    <li class="flex items-center justify-center gap-3"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> Locker & Shower</li>
+                    <li class="flex items-center justify-center gap-3 opacity-30"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"></path></svg> Personal Trainer</li>
+                </ul>
+                <button onclick="openCheckout('Starter', '999')" class="block w-full border border-red-600/50 hover:bg-red-600 py-4 rounded-2xl font-black uppercase tracking-widest transition-all">Select Plan</button>
+            </div>
+
+            <!-- Pro -->
+            <div class="bg-black border-2 border-red-600 p-12 rounded-[2.5rem] transform md:scale-110 shadow-2xl shadow-red-600/20 z-10 reveal relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-black uppercase py-2 px-6 rounded-full tracking-[0.3em] shadow-lg">Most Popular</div>
+                <h4 class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-6">Warrior Mode</h4>
+                <p class="text-6xl font-black text-white mb-6 italic tracking-tighter">₹1999<span class="text-sm font-normal text-gray-500">/mo</span></p>
+                <ul class="text-gray-300 space-y-4 mb-12 text-sm">
+                    <li class="flex items-center justify-center gap-3 font-bold"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> All Basic Features</li>
+                    <li class="flex items-center justify-center gap-3 font-bold"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> 2 Trainer Sessions / wk</li>
+                    <li class="flex items-center justify-center gap-3 font-bold"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> Diet & Routine Plan</li>
+                </ul>
+                <button onclick="openCheckout('Warrior', '1999')" class="block w-full bg-red-600 hover:bg-red-700 py-5 rounded-2xl font-black uppercase tracking-widest transition-all btn-glow shadow-xl shadow-red-600/30">Go Warrior</button>
+            </div>
+
+            <!-- Elite -->
+            <div class="bg-gray-950 border border-gray-900 p-8 rounded-3xl transition-all hover:border-red-600/30 reveal">
+                <h4 class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-6">Legendary Status</h4>
+                <p class="text-5xl font-black text-white mb-6 italic tracking-tighter">₹2999<span class="text-sm font-normal text-gray-500">/mo</span></p>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm">
+                    <li class="flex items-center justify-center gap-3"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> All Warrior Features</li>
+                    <li class="flex items-center justify-center gap-3"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> 1-on-1 Nutritionist</li>
+                    <li class="flex items-center justify-center gap-3"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg> Unlimited Training</li>
+                </ul>
+                <button onclick="openCheckout('Legend', '2999')" class="block w-full border border-red-600/50 hover:bg-red-600 py-4 rounded-2xl font-black uppercase tracking-widest transition-all">Become Legend</button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-24 bg-black">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h3 class="text-4xl font-black text-white mb-4 uppercase italic">Common <span class="text-red-600">Questions</span></h3>
+            <p class="text-gray-500 uppercase tracking-widest text-[10px] font-bold">Everything you need to know before you start</p>
+        </div>
+        
+        <div class="space-y-4 reveal">
+            <!-- FAQ 1 -->
+            <div class="faq-item bg-gray-950 border border-gray-900 rounded-3xl overflow-hidden transition-all duration-300">
+                <button class="w-full flex justify-between items-center p-8 text-left hover:bg-gray-900/50 transition-colors" onclick="toggleFaq(this)">
+                    <span class="font-bold uppercase tracking-widest text-sm text-white">Do you offer personal training?</span>
+                    <svg class="w-5 h-5 text-red-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer px-8 text-gray-400 text-sm leading-relaxed">
+                    Yes! We have a team of certified master trainers. Our Warrior plan includes twice-weekly sessions, while the Legend plan offers more personalized attention.
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item bg-gray-950 border border-gray-900 rounded-3xl overflow-hidden transition-all duration-300">
+                <button class="w-full flex justify-between items-center p-8 text-left hover:bg-gray-900/50 transition-colors" onclick="toggleFaq(this)">
+                    <span class="font-bold uppercase tracking-widest text-sm text-white">Is the gym open 24/7?</span>
+                    <svg class="w-5 h-5 text-red-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer px-8 text-gray-400 text-sm leading-relaxed">
+                    Absolutely. We understand your schedule might be hectic, so our members have round-the-clock access with secure biometric entry.
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item bg-gray-950 border border-gray-900 rounded-3xl overflow-hidden transition-all duration-300">
+                <button class="w-full flex justify-between items-center p-8 text-left hover:bg-gray-900/50 transition-colors" onclick="toggleFaq(this)">
+                    <span class="font-bold uppercase tracking-widest text-sm text-white">Can beginners join?</span>
+                    <svg class="w-5 h-5 text-red-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer px-8 text-gray-400 text-sm leading-relaxed">
+                    Of course! We welcome everyone from absolute beginners to professional athletes. Our trainers will guide you through the basics to ensure safe and effective workouts.
+                </div>
+            </div>
+            
+            <!-- FAQ 4 -->
+            <div class="faq-item bg-gray-950 border border-gray-900 rounded-3xl overflow-hidden transition-all duration-300">
+                <button class="w-full flex justify-between items-center p-8 text-left hover:bg-gray-900/50 transition-colors" onclick="toggleFaq(this)">
+                    <span class="font-bold uppercase tracking-widest text-sm text-white">Are there any joining fees?</span>
+                    <svg class="w-5 h-5 text-red-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer px-8 text-gray-400 text-sm leading-relaxed">
+                    We keep it transparent. There's a one-time registration fee of ₹500, which includes your biometric setup and a welcome fitness assessment.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-24 bg-gray-950 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h3 class="text-4xl font-black text-white mb-4 uppercase italic">Join the <span class="text-red-600">Movement</span></h3>
+            <p class="text-gray-500">Visit our facility or leave your details for a free consultation.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <!-- Map & Info -->
+            <div class="space-y-8 reveal">
+                <div class="rounded-[2.5rem] overflow-hidden border border-gray-900 h-[450px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.123456789!2d77.123456789!3d28.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDA3JzM0LjQiTiA3N8KwMDcnMjQuNCJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="bg-black p-8 rounded-3xl border border-gray-900">
+                        <h5 class="text-red-600 font-bold uppercase text-[10px] tracking-[0.3em] mb-4">Base Operations</h5>
+                        <p class="text-gray-400 text-sm leading-relaxed font-medium"><span class="dynamic-name">Titan Fitness</span> Center, Sector 15, New Delhi, India 110001</p>
+                    </div>
+                    <div class="bg-black p-8 rounded-3xl border border-gray-900">
+                        <h5 class="text-red-600 font-bold uppercase text-[10px] tracking-[0.3em] mb-4">Direct Line</h5>
+                        <p class="text-gray-400 text-sm leading-relaxed font-medium">+91 0000000000<br>+91 11 2233 4455</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div id="form-container" class="bg-black p-10 md:p-14 rounded-[3rem] border border-gray-900 reveal h-full flex flex-col justify-center relative shadow-2xl overflow-hidden">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">Name</label>
+                            <input type="text" name="name" placeholder="John Doe" required
+                                class="w-full p-5 rounded-2xl bg-gray-950 border border-gray-900 focus:border-red-600 outline-none transition-all focus:ring-4 focus:ring-red-600/5 placeholder:text-gray-800 text-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">Email</label>
+                            <input type="email" name="email" placeholder="john@example.com" required
+                                class="w-full p-5 rounded-2xl bg-gray-950 border border-gray-900 focus:border-red-600 outline-none transition-all focus:ring-4 focus:ring-red-600/5 placeholder:text-gray-800 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">Fitness Goal</label>
+                        <textarea name="message" placeholder="Weight loss, muscle gain, etc..." required
+                            class="w-full p-5 rounded-2xl bg-gray-950 border border-gray-900 focus:border-red-600 outline-none h-44 transition-all focus:ring-4 focus:ring-red-600/5 placeholder:text-gray-800 text-sm"></textarea>
+                    </div>
+
+                    <button type="submit" id="submit-btn"
+                        class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-[1.5rem] font-black uppercase tracking-[0.3em] text-white transition-all btn-glow active:scale-95 shadow-2xl shadow-red-600/30 flex items-center justify-center gap-4">
+                        <span>Send Message</span>
+                        <div id="btn-spinner" class="spinner hidden"></div>
+                    </button>
+                </form>
+
+                <!-- Success State (Hidden) -->
+                <div id="success-msg" class="hidden absolute inset-0 bg-black flex flex-col items-center justify-center text-center p-12">
+                    <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-red-600/30">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h4 class="text-3xl font-black uppercase italic italic mb-4">Message Sent!</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Our elite team will contact you within 24 hours to schedule your free trial.</p>
+                    <button onclick="resetForm()" class="mt-8 text-red-600 font-bold uppercase tracking-widest text-xs border-b border-red-600 pb-1">Send another message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Case Study Section -->
+<section class="py-24 bg-red-950/10 border-y border-red-900/30">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="reveal">
+            <h3 class="text-4xl font-black text-white mb-16 uppercase italic text-center">Project <span class="text-red-600">Case Study</span></h3>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="bg-black/50 p-8 rounded-3xl border border-red-900/20">
+                    <div class="w-10 h-10 bg-red-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <h4 class="text-white font-bold uppercase tracking-widest text-sm mb-4">The Problem</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Local gyms often struggle with high website bounce rates and low membership conversions due to cluttered designs, lack of verifiable social proof, and weak calls-to-action.</p>
+                </div>
+                <div class="bg-black/50 p-8 rounded-3xl border border-red-900/20">
+                    <div class="w-10 h-10 bg-red-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.674a1 1 0 00.707-.293l4.121-4.121a1 1 0 000-1.414l-4.121-4.121A1 1 0 0014.337 7H9.663a1 1 0 00-.707.293l-4.121 4.121a1 1 0 000 1.414l4.121 4.121a1 1 0 00.707.293z"></path></svg>
+                    </div>
+                    <h4 class="text-white font-bold uppercase tracking-widest text-sm mb-4">The Solution</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Developed a conversion-optimized architecture featuring tiered pricing strategies, dynamic social proof carousels, before/after transformation grids, and persistent high-impact CTAs.</p>
+                </div>
+                <div class="bg-black/50 p-8 rounded-3xl border border-red-900/20">
+                    <div class="w-10 h-10 bg-red-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <h4 class="text-white font-bold uppercase tracking-widest text-sm mb-4">The Impact</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">The resulting landing page provides a professional, "elite" brand identity designed to increase membership inquiries by up to 40% and drastically improve lead quality through strategic UX.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/910000000000" id="floating-wa"
+   class="fixed bottom-8 right-8 z-[90] bg-[#25D366] p-5 rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-90 group">
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span class="absolute right-full mr-6 top-1/2 -translate-y-1/2 bg-white text-black px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-xl">Chat with us!</span>
+</a>
+
+<!-- Fake Checkout Modal -->
+<div id="checkout-modal" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6">
+    <div class="bg-gray-950 border border-gray-900 w-full max-w-lg rounded-[2.5rem] p-10 relative shadow-2xl shadow-red-600/10">
+        <button onclick="closeCheckout()" class="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <div class="text-center mb-10">
+            <h3 class="text-3xl font-black uppercase italic tracking-tighter">Secure <span class="text-red-600">Checkout</span></h3>
+            <p class="text-gray-500 text-xs mt-3 font-bold uppercase tracking-widest">Plan: <span id="modal-plan-name" class="text-white"></span> | <span id="modal-plan-price" class="text-red-600"></span></p>
+        </div>
+
+        <form class="space-y-5" onsubmit="handleCheckout(event)">
+            <div class="space-y-2">
+                <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">Card Number</label>
+                <input type="text" placeholder="XXXX XXXX XXXX XXXX" class="w-full bg-black border border-gray-900 p-4 rounded-2xl focus:border-red-600 outline-none text-sm">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">Expiry</label>
+                    <input type="text" placeholder="MM/YY" class="w-full bg-black border border-gray-900 p-4 rounded-2xl focus:border-red-600 outline-none text-sm">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase tracking-widest text-gray-500 font-bold ml-2">CVV</label>
+                    <input type="password" placeholder="***" class="w-full bg-black border border-gray-900 p-4 rounded-2xl focus:border-red-600 outline-none text-sm">
+                </div>
+            </div>
+            <div class="py-6 border-t border-gray-900 mt-8">
+                <div class="flex justify-between items-center mb-8">
+                    <span class="text-gray-400 font-bold uppercase text-xs">Total Amount:</span>
+                    <span id="final-price" class="text-3xl font-black text-white italic tracking-tighter"></span>
+                </div>
+                <button type="submit" id="pay-btn" class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-2xl font-black uppercase tracking-widest transition-all btn-glow flex items-center justify-center gap-4">
+                    <span>Process Payment</span>
+                    <div id="pay-spinner" class="spinner hidden"></div>
+                </button>
+            </div>
+        </form>
+        <div class="mt-6 flex items-center justify-center gap-6 opacity-20 grayscale">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-6" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" class="h-4" alt="UPI">
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer id="footer" class="bg-gray-950 text-center py-20 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-6 reveal">
+        <div class="grid md:grid-cols-3 gap-16 text-left mb-16">
+            <div>
+                <h2 class="text-2xl font-black text-red-600 mb-8 uppercase italic tracking-tighter dynamic-name">Titan Fitness</h2>
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">The ultimate destination for fitness enthusiasts in New Delhi. We provide elite training and modern equipment to help you reach your peak performance.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Navigation</h4>
+                <ul class="text-gray-500 space-y-4 text-sm font-bold uppercase">
+                    <li><a href="#" class="hover:text-red-600 transition-colors">Home</a></li>
+                    <li><a href="#transformations" class="hover:text-red-600 transition-colors">Success Stories</a></li>
+                    <li><a href="#plans" class="hover:text-red-600 transition-colors">Membership</a></li>
+                    <li><a href="#faq" class="hover:text-red-600 transition-colors">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Legal & Security</h4>
+                <ul class="text-gray-500 space-y-4 text-sm font-bold uppercase">
+                    <li><a href="#" class="hover:text-red-600 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-red-600 transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-red-600 transition-colors">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-12 border-t border-gray-900 text-center">
+            <div class="text-gray-400 mb-6 text-sm font-medium tracking-wide">
+                Developed & Optimized by <span class="text-red-600 font-bold tracking-[0.2em] uppercase">@secure_with_rajat</span>
+            </div>
+            <div class="text-gray-600 text-[10px] uppercase tracking-[0.3em] flex flex-wrap justify-center gap-8 mb-10 font-black">
+                <span class="flex items-center gap-2"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.9L9.03 9.103c.628.384 1.313.384 1.942 0L17.834 4.9A1 1 0 0016 3.235l-5.166 3.146a1 1 0 01-1.668 0L4 3.235A1 1 0 002.166 4.9z" clip-rule="evenodd"></path><path d="M10 11.536l-7.834-4.773A1 1 0 001 7.636v7.364a1 1 0 001 1h16a1 1 0 001-1V7.636a1 1 0 00-1.166-.873L10 11.536z"></path></svg> SSL Secure</span>
+                <span class="flex items-center gap-2"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg> Safe Payments</span>
+                <span class="flex items-center gap-2"><svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg> 24/7 Protected</span>
+            </div>
+            <p class="text-gray-800 text-[9px] uppercase tracking-[0.4em] font-black">© 2026 <span class="dynamic-name">Titan Fitness</span>. Built for high performance.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* --- MOBILE MENU LOGIC --- */
+    const menuBtn = document.getElementById('menu-btn');
+    const closeMenu = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    /* --- FAQ ACCORDION LOGIC --- */
+    function toggleFaq(btn) {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close other items
+        document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+        
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    }
+
+    /* --- TESTIMONIAL SLIDER LOGIC --- */
+    const slider = document.getElementById('testimonial-slider');
+    function slideTestimonial(dir) {
+        const scrollAmt = slider.offsetWidth;
+        if(dir === 'next') {
+            slider.scrollBy({ left: scrollAmt, behavior: 'smooth' });
+        } else {
+            slider.scrollBy({ left: -scrollAmt, behavior: 'smooth' });
+        }
+    }
+
+    /* --- CHECKOUT MODAL LOGIC --- */
+    function openCheckout(name, price) {
+        document.getElementById('modal-plan-name').innerText = name;
+        document.getElementById('modal-plan-price').innerText = '₹' + price;
+        document.getElementById('final-price').innerText = '₹' + price;
+        document.getElementById('checkout-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckout() {
+        document.getElementById('checkout-modal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function handleCheckout(e) {
+        e.preventDefault();
+        const btn = document.getElementById('pay-btn');
+        const spinner = document.getElementById('pay-spinner');
+        
+        btn.disabled = true;
+        spinner.classList.remove('hidden');
+        btn.querySelector('span').innerText = 'Processing...';
+
+        setTimeout(() => {
+            alert('Success! Your membership has been activated. Welcome to the elite.');
+            closeCheckout();
+            btn.disabled = false;
+            spinner.classList.add('hidden');
+            btn.querySelector('span').innerText = 'Process Payment';
+        }, 2000);
+    }
+
+    /* --- CONTACT FORM LOGIC --- */
+    const contactForm = document.getElementById('contact-form');
+    const successMsg = document.getElementById('success-msg');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnSpinner = document.getElementById('btn-spinner');
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Start Loading
+        submitBtn.disabled = true;
+        btnSpinner.classList.remove('hidden');
+        submitBtn.querySelector('span').innerText = 'Sending...';
+
+        // Simulate API Call
+        setTimeout(() => {
+            successMsg.classList.remove('hidden');
+            submitBtn.disabled = false;
+            btnSpinner.classList.add('hidden');
+            submitBtn.querySelector('span').innerText = 'Submit Inquiry';
+            contactForm.reset();
+        }, 1500);
+    });
+
+    function resetForm() {
+        successMsg.classList.add('hidden');
+    }
+
+    /* --- SCROLL REVEAL LOGIC --- */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(reveal => observer.observe(reveal));
+
+    /* --- HIDE WA BUTTON AT FOOTER --- */
+    const footer = document.getElementById('footer');
+    const floatingWa = document.getElementById('floating-wa');
+    window.addEventListener('scroll', () => {
+        const footerPos = footer.getBoundingClientRect().top;
+        if (footerPos < window.innerHeight) { 
+            floatingWa.classList.add('wa-out'); 
+        } else { 
+            floatingWa.classList.remove('wa-out'); 
+        }
+    });
+
+    /* --- DYNAMIC PERSONALIZATION --- */
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientName = urlParams.get('name');
+    const clientPhone = urlParams.get('phone');
+
+    if (clientName) {
+        document.title = clientName + " | Elite Fitness Performance";
+        document.querySelectorAll('.dynamic-name').forEach(el => {
+            el.innerText = clientName;
+        });
+    }
+
+    if (clientPhone) {
+        const waLink = document.getElementById('floating-wa');
+        if (waLink) {
+            waLink.href = `https://wa.me/${clientPhone}?text=Hi, I am interested in joining ${clientName || 'Titan Fitness'}!`;
+        }
+    }
+
+    console.log("Titan Fitness v3.1.3 Reverted Transformation - Portfolio Ready");
+</script>
+
+</body>
+</html>
